@@ -40,7 +40,7 @@ export default function ProductCard({ product, view = 'grid' }: Props) {
     return (
       <div className="flex gap-4 border border-gray-100 bg-white p-4 hover:shadow-sm transition-shadow">
         <Link
-          href={`/product/${product.slug}`}
+          href={`/step/${product?.slug}`}
           className="relative w-24 h-24 flex-shrink-0 overflow-hidden bg-gray-50"
         >
           <Image

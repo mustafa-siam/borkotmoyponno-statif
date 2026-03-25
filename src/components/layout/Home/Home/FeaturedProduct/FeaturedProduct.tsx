@@ -1,5 +1,4 @@
 ﻿"use client";
-import { useHandleFindProductQuery } from "@/redux/features/product/productApi";
 import Link from "next/link";
 import React, { useState } from "react";
 import ProductCard from "../../shared/ProductCard";
@@ -49,7 +48,7 @@ export default function FeaturedProduct() {
         <div
           className={
             view === 'grid'
-              ? 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4'
+              ? 'grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4'
               : 'flex flex-col gap-4'
           }
         >
