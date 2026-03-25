@@ -27,6 +27,7 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 import { Product, products } from "@/hooks/useProducts";
 import { addToCart } from "@/components/layout/Home/shared/ProductCard";
+import { reviews } from "@/hooks/useReviews";
 
 type ShippingOption = "dhakaCity" | "dhakaCityOuter" | "outsideDhaka";
 type PaymentOption = "cash" | "bkash";
@@ -49,7 +50,7 @@ const ShopDetails = ({ slug }: any) => {
   const router = useRouter();
   const [quantity, setQuantity] = useState<number>(1);
   const [placeOrderLoading, setPlaceOrderLoading] = useState(false);
-  const [reviews, setReviews] = useState<any[]>([]); // Placeholder if you have reviews
+  //const [reviews, setReviews] = useState<any[]>([]); // Placeholder if you have reviews
 
   const {
     register,
@@ -880,15 +881,18 @@ const ShopDetails = ({ slug }: any) => {
                         >
                           <div className="bg-white mx-2 p-5 rounded h-full flex flex-col">
                             <p className="text-sm text-[#656565] mb-5 flex-1">
-                              {review?.content}
+                              {review?.comment}
                             </p>
                             <div className="flex justify-between items-center gap-5">
                               <div className="space-y-2">
                                 <p className="text-lg text-[#2A3347] font-semibold">
                                   {review?.name}
                                 </p>
+                                 <p className="text-sm text-[#656565]">
+                                  {review?.location}
+                                </p>
                                 <p className="text-sm text-[#656565]">
-                                  {review?.degisnation}
+                                  {review?.date}
                                 </p>
                               </div>
                             </div>
@@ -901,7 +905,7 @@ const ShopDetails = ({ slug }: any) => {
             <div className="flex justify-center items-center my-10 -mt-2 ">
               <Link
                 href="#orderSection"
-                className="rounded-none bg-[#FFa800] text-[#0E243A] text-2xl font-bold  py-3 px-5 cursor-pointer"
+                className="rounded-none bg-[#FFa800] text-[#0E243A] text-2xl font-bold  py-3 px-5 cursor-pointer mt-16"
               >
                 অর্ডার করতে চাই
               </Link>
@@ -914,7 +918,7 @@ const ShopDetails = ({ slug }: any) => {
             <h2 className="text-2xl font-bold text-forest-green mb-8 text-center">
               আরও পণ্য দেখুন
             </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
               {otherProducts.map((p) => (
                 <div
                   className="group bg-white border border-gray-100 overflow-hidden hover:shadow-sm transition-shadow"
