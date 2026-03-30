@@ -129,11 +129,16 @@ export default function ShopPage() {
         <section className="py-10 bg-pageColor">
           <div className="max-w-screen-xl mx-auto px-4 sm:px-6">
             {filtered.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                {filtered.map((product) => (
-                  <ProductCard key={product._id} product={product} />
-                ))}
-              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+  {filtered.map((product) => (
+    <div
+      key={product._id}
+      className={filtered.length === 1 ? "col-span-2 sm:col-span-3 lg:col-span-4" : ""}
+    >
+      <ProductCard product={product} />
+    </div>
+  ))}
+</div>
             ) : (
               <div className="text-center py-20">
                 <p className="text-gray-400 text-lg mb-4">

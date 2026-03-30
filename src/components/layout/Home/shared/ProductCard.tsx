@@ -147,21 +147,22 @@ export default function ProductCard({ product, view = 'grid' }: Props) {
           )}
         </div>
 
-        <div className="flex gap-2 mt-auto pt-3">
-          <button
-            onClick={() => addToCart(product)}
-            className="flex-1 bg-forest-green hover:bg-deepGreen text-white text-sm py-2 flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-          >
-            <ShoppingCart size={14} />
-            কার্টে যোগ
-          </button>
-          <Link
-            href={`/step/${product?.slug}`}
-            className="border border-forest-green text-forest-green cursor-pointer hover:bg-forest-green hover:text-white text-sm px-3 py-2 transition-colors"
-          >
-            বিস্তারিত
-          </Link>
-        </div>
+        <div className="flex flex-col md:flex-row gap-2 mt-auto pt-3">
+  <button
+    onClick={() => addToCart(product)}
+    className="flex-1 bg-forest-green hover:bg-deepGreen text-white text-sm py-2 flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+  >
+    <ShoppingCart size={14} />
+    কার্টে যোগ
+  </button>
+
+  <Link
+    href={`/step/${product?.slug}`}
+    className="flex items-center justify-center border border-forest-green text-forest-green cursor-pointer hover:bg-forest-green hover:text-white text-sm px-3 py-2 transition-colors"
+  >
+    বিস্তারিত
+  </Link>
+</div>
       </div>
     </div>
   );

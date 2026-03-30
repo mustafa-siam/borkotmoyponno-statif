@@ -219,22 +219,27 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                   <span className="line-through">{prvPrice}</span>টাকা
                 </h1>
               ) : null}
-              <h1 className="text-2xl mt-5 sm:text-3xl lg:text-4xl font-semibold text-white">
-                বর্তমান মূল্য :{" "}
-                <span className="bg-[#FFA800] text-black px-4">৳ {displayPrice} টাকা</span>
-                {(productType === "variant"
-                  ? (selectedVariant?.prvPrice ?? 0) > displayPrice
-                  : prvPrice > displayPrice) && (
-                  <span className="ml-3 bg-green-500 text-white text-sm sm:text-base px-3 py-1 rounded-full">
-                    Save ৳
-                    {(
-                      (productType === "variant"
-                        ? selectedVariant?.prvPrice ?? 0
-                        : prvPrice ?? 0) - displayPrice
-                    ).toLocaleString()}
-                  </span>
-                )}
-              </h1>
+             <div className="flex flex-col justify-center items-center sm:flex-row sm:items-center gap-5 mt-5">
+  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">
+    বর্তমান মূল্য :{" "}
+    <span className="bg-[#FFA800] text-black px-4">
+      ৳ {displayPrice} টাকা
+    </span>
+  </h1>
+
+  {(productType === "variant"
+    ? (selectedVariant?.prvPrice ?? 0) > displayPrice
+    : prvPrice > displayPrice) && (
+    <span className="bg-green-500 text-white text-sm sm:text-base px-3 py-1 rounded-full w-fit">
+      Save ৳
+      {(
+        (productType === "variant"
+          ? selectedVariant?.prvPrice ?? 0
+          : prvPrice ?? 0) - displayPrice
+      ).toLocaleString()}
+    </span>
+  )}
+</div>
             </div>
  
             {/* ── Order Form ── */}
@@ -853,7 +858,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
             <div className="flex justify-center items-center my-10 -mt-2">
               <Link
                 href="#orderSection"
-                className="rounded-none bg-[#FFa800] text-[#0E243A] text-2xl font-bold py-3 px-5 cursor-pointer"
+                className="rounded-none bg-[#FFa800] text-[#0E243A] text-2xl font-bold py-3 px-5 cursor-pointer mt-10"
               >
                 অর্ডার করতে চাই
               </Link>
@@ -865,17 +870,17 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                 Related Product
               </p>
               {allData.length > 0 ? (
-                <Carousel>
-                  <CarouselContent>
-                    {allData.map((product, index) => (
-                      <CarouselItem key={index} className="basis-1/1 md:basis-1/3 lg:basis-1/4">
-                        <div className="p-1 h-full">
-                          <ProductCard product={product} />
-                        </div>
-                      </CarouselItem>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              
+                    {allData.slice(0,4).map((product) => (
+                      <ProductCard
+                                    key={product._id}  
+                                    product={product}
+                                
+                                  />
                     ))}
-                  </CarouselContent>
-                </Carousel>
+                
+                </div>
               ) : (
                 <div className="col-span-full flex flex-col items-center justify-center text-center p-10 bg-white rounded-lg shadow-md border border-gray-200">
                   <h3 className="text-xl font-semibold text-gray-800 mb-2">No Products Found</h3>
