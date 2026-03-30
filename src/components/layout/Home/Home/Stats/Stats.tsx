@@ -54,13 +54,13 @@ export default function ProfessionalStats() {
       <div className="max-w-screen-xl mx-auto relative z-10">
         {/* Section Header */}
         <div className="text-center mb-12 lg:mb-16">
-          <p className="text-xs font-medium uppercase tracking-[0.2em] text-forest-green/70 mb-3">
+          <p className="text-sm text-deepGreen font-medium uppercase tracking-[0.2em] mb-3">
             আমাদের বিশেষত্ব
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-midnight-navy mb-3">
+          <h2 className="text-3xl sm:text-4xl text-forest-green font-bold mb-3">
             কেন আমাদের বেছে নেবেন?
           </h2>
-          <p className="text-base text-gray-400 max-w-lg mx-auto">
+          <p className="text-[13px] text-gray-400 max-w-lg mx-auto">
             আমাদের প্রতিটি সেবায় রয়েছে গুণমান এবং বিশ্বস্ততার নিশ্চয়তা
           </p>
         </div>
