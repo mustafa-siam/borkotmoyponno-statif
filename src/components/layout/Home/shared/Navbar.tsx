@@ -86,7 +86,7 @@ const Navbar = () => {
 
               {search && products.length > 0 && (
                 <div className="absolute top-12 right-0 w-80 bg-white shadow-xl z-[10000] max-h-96 overflow-y-auto border">
-                  {products.map((product) => (
+                  {products.map((product:any) => (
                     <Link
                       key={product._id}
                       href={`/step/${product.slug}`}
@@ -187,7 +187,7 @@ const Navbar = () => {
 
           {search && products.length > 0 && (
             <div className="overflow-y-auto max-h-[80vh]">
-              {products.map((product) => (
+              {products.map((product: any) => (
                 <Link
                   key={product._id}
                   href={`/step/${product.slug}`}

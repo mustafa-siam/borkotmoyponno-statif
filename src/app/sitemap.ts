@@ -1,3 +1,5 @@
+export const revalidate = 3600; // Revalidate the sitemap every hour
+
 export default async function sitemap() {
   const baseUrl = "https://ponnobari.store";
 
@@ -18,30 +20,39 @@ export default async function sitemap() {
     {
       url: `${baseUrl}/shop`,
       lastModified: new Date(),
-      changeFrequency: "daily", // More frequent for product pages
+      changeFrequency: "daily",
       priority: 0.8,
     },
   ];
 
-  // Dynamic product pages
-  let productPages = [];
-
   try {
+    // Adding a cache tag or revalidate to the fetch itself
     const response = await fetch(
-      "https://server.ponnobari.store/api/v1/product"
+      "https://server.ponnobari.store/api/v1/product",
+      { next: { revalidate: 3600 } } 
     );
-    const data = await response.json();
 
-    // Transform API response to sitemap format
-    productPages = (data?.payload || []).map((product: any) => ({
+    if (!response.ok) {
+      throw new Error(`API responded with status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const products = data?.payload || [];
+
+    const productPages = products.map((product: any) => ({
       url: `${baseUrl}/product/${product.slug}`,
-      lastModified: new Date(product.updatedAt || product.createdAt),
+      // Fallback to current date if product dates are missing
+      lastModified: product.updatedAt ? new Date(product.updatedAt) : new Date(),
       changeFrequency: "daily",
       priority: 0.7,
     }));
-  } catch (error) {
-    console.error("Failed to fetch products:", error);
-  }
 
-  return [...staticPages, ...productPages];
+    return [...staticPages, ...productPages];
+    
+  } catch (error) {
+    // CRITICAL: If the API is down, we still return the static pages 
+    // so the build doesn't fail and the sitemap isn't broken.
+    console.error("Sitemap Fetch Error:", error);
+    return staticPages;
+  }
 }
