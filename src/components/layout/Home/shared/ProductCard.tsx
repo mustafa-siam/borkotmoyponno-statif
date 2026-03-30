@@ -14,27 +14,31 @@ interface Props {
 export function addToCart(product: Product) {
   const cart = JSON.parse(localStorage.getItem('ponnoBariCart') || '[]');
   const existing = cart.find((item: { slug: string }) => item.slug === product.slug);
+  
   if (existing) {
     existing.quantity = (existing.quantity || 1) + 1;
   } else {
     cart.push({
       slug: product.slug,
-      name: product.name,
+      name: product.productName,
       price: product.price,
-      image: product.image,
+      image: product.productImage,
       unit: product.unit,
       quantity: 1,
     });
   }
+  
   localStorage.setItem('ponnoBariCart', JSON.stringify(cart));
   window.dispatchEvent(new Event('cartUpdated'));
   toast.success('কার্টে যোগ হয়েছে!');
 }
 
 export default function ProductCard({ product, view = 'grid' }: Props) {
-  const discount = product.prvPrice
+  const discount = product.prvPrice && product.prvPrice > product.price
     ? Math.round(((product.prvPrice - product.price) / product.prvPrice) * 100)
     : null;
+
+  const categoryTag = product.seo.tag?.[0] || 'পণ্য';
 
   if (view === 'list') {
     return (
@@ -44,8 +48,8 @@ export default function ProductCard({ product, view = 'grid' }: Props) {
           className="relative w-24 h-24 flex-shrink-0 overflow-hidden bg-gray-50"
         >
           <Image
-            src={product.image}
-            alt={product.name}
+            src={product.productImage}
+            alt={product.productName}
             fill
             className="object-cover"
           />
@@ -53,21 +57,25 @@ export default function ProductCard({ product, view = 'grid' }: Props) {
         <div className="flex-1 flex flex-col justify-between">
           <div>
             <span className="text-xs text-deepGreen bg-mint-background px-2 py-0.5">
-              {product.category}
+              {categoryTag}
             </span>
             <Link href={`/step/${product?.slug}`}>
-              <h3 className="font-semibold text-midnight-navy mt-1 hover:text-forest-green transition-colors">
-                {product.name}
-              </h3>
+              <h3 
+                className="font-semibold text-midnight-navy mt-1 hover:text-forest-green transition-colors"
+                dangerouslySetInnerHTML={{ __html: product.productName }}
+              />
             </Link>
-            <p className="text-xs text-gray-400">{product.unit}</p>
+            <div 
+              className="text-xs text-gray-400 line-clamp-1"
+              dangerouslySetInnerHTML={{ __html: product.unit }}
+            />
           </div>
           <div className="flex items-center justify-between mt-2 flex-wrap gap-2">
             <div className="flex items-center gap-2">
               <span className="text-lg font-bold text-forest-green">
                 ৳ {product.price}
               </span>
-              {product.prvPrice && (
+              {product.prvPrice > product.price && (
                 <span className="text-sm text-gray-400 line-through">
                   ৳ {product.prvPrice}
                 </span>
@@ -82,7 +90,7 @@ export default function ProductCard({ product, view = 'grid' }: Props) {
                 কার্টে যোগ
               </button>
               <Link
-                href={`/product/${product.slug}`}
+                href={`/step/${product.slug}`}
                 className="border border-forest-green text-forest-green px-3 py-1.5 text-sm hover:bg-forest-green hover:text-white transition-colors"
               >
                 দেখুন
@@ -105,8 +113,8 @@ export default function ProductCard({ product, view = 'grid' }: Props) {
       <Link href={`/step/${product?.slug}`}>
         <div className="relative h-48 overflow-hidden bg-gray-50">
           <Image
-            src={product.image}
-            alt={product.name}
+            src={product.productImage}
+            alt={product.productName}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-300"
           />
@@ -114,21 +122,25 @@ export default function ProductCard({ product, view = 'grid' }: Props) {
       </Link>
 
       <div className="p-4 flex flex-col flex-1">
-        <span className="text-xs text-deepGreen bg-mint-background px-2 py-0.5">
-          {product.category}
+        <span className="text-xs text-deepGreen bg-mint-background px-2 py-0.5 w-fit">
+          {categoryTag}
         </span>
         <Link href={`/step/${product?.slug}`}>
-          <h3 className="font-semibold text-lg text-midnight-navy mt-2 hover:text-forest-green transition-colors line-clamp-2">
-            {product.name}
-          </h3>
+          <h3 
+            className="font-semibold text-lg text-midnight-navy mt-2 hover:text-forest-green transition-colors line-clamp-2"
+            dangerouslySetInnerHTML={{ __html: product.productName }}
+          />
         </Link>
-        <p className="text-sm text-gray-400 mt-auto pt-2">{product.unit}</p>
+        <div 
+          className="text-sm text-gray-400 mt-auto pt-2 line-clamp-1"
+          dangerouslySetInnerHTML={{ __html: product.unit }}
+        />
 
         <div className="flex items-center gap-2 mt-auto pt-3">
           <span className="text-lg font-bold text-forest-green">
             ৳ {product.price}
           </span>
-          {product.prvPrice && (
+          {product.prvPrice > product.price && (
             <span className="text-sm text-gray-400 line-through">
               ৳ {product.prvPrice}
             </span>

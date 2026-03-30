@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Document,
@@ -6,139 +8,155 @@ import {
   View,
   StyleSheet,
   Font,
+  Image as PdfImage,
 } from "@react-pdf/renderer";
 
-interface Order {
-  products: any;
+interface OrderInvoiceProps {
   payload: {
     createdAt: string;
-    user: {
-      name: string;
-      phone: string;
-      address: string;
-    };
+    user: { name: string; phone: string; address: string };
     shippingCost: number;
-    products: {
-      product: {
-        productName: string;
-        productImage: string;
-      };
-      quantity: number;
-      price?: number;
-    }[];
-    paymentInfo: {
-      method: string;
-      cashPaymentMessage?: string;
-      bkashPhone?: string;
-      bkashTransactionId?: string;
-    };
-    inDhaka: boolean;
+    paymentInfo: { method: string };
     trackingId: string;
-    totalAmount?: number;
-    deliveryFee?: number;
-    status?: string;
+    totalAmount: number;
   };
+  products: {
+    name: string;
+    price: number;
+    quantity: number;
+    image: string;
+    unit: string;
+  }[];
 }
+
 Font.register({
   family: "Siyamrupali",
   src: "/assets/fonts/Siyamrupali.ttf",
 });
-// Modernized styles
+
 const styles = StyleSheet.create({
   page: {
-    padding: 20,
+    padding: 30,
     fontFamily: "Siyamrupali",
     fontSize: 10,
     backgroundColor: "#ffffff",
-    color: "#1f2937",
+    color: "#111827",
   },
+
   header: {
     textAlign: "center",
     marginBottom: 20,
-    paddingBottom: 10,
-    borderBottom: "2 solid #1e3a8a",
   },
-  headerTitle: {
-    fontSize: 24,
+
+  brand: {
+    fontSize: 20,
     fontWeight: "bold",
-    color: "#1e3a8a",
+    color: "#16a34a",
   },
+
+  title: {
+    fontSize: 14,
+    marginTop: 4,
+    color: "#374151",
+  },
+
   section: {
-    marginBottom: 20,
-    padding: 12,
-    border: "1 solid #d1d5db",
-    borderRadius: 6,
-    backgroundColor: "#f9fafb",
+    marginBottom: 15,
   },
+
   sectionTitle: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: "bold",
     marginBottom: 6,
-    color: "#111827",
-    borderBottom: "1 solid #e5e7eb",
-    paddingBottom: 4,
+    borderBottomWidth: 1,
+    borderBottomColor: "#e5e7eb",
+    paddingBottom: 3,
   },
+
   text: {
-    fontSize: 11,
-    marginBottom: 4,
+    fontSize: 10,
+    marginBottom: 3,
   },
+
   table: {
     marginTop: 8,
     borderWidth: 1,
-    borderColor: "#d1d5db",
+    borderColor: "#e5e7eb",
   },
-  tableRow: {
+
+  row: {
     flexDirection: "row",
     borderBottomWidth: 1,
     borderBottomColor: "#e5e7eb",
-    paddingVertical: 5,
-    paddingHorizontal: 4,
     alignItems: "center",
+    paddingVertical: 6,
+    paddingHorizontal: 4,
   },
-  tableHeaderCell: {
-    flex: 1,
-    fontSize: 11,
+
+  headerRow: {
+    backgroundColor: "#f3f4f6",
     fontWeight: "bold",
-    color: "#1f2937",
   },
-  tableCell: {
-    flex: 1,
-    fontSize: 10,
-    color: "#374151",
+
+  colProduct: { flex: 3, flexDirection: "row", alignItems: "center" },
+  colQty: { flex: 1, textAlign: "center" },
+  colPrice: { flex: 1, textAlign: "center" },
+  colTotal: { flex: 1, textAlign: "center" },
+
+  img: {
+    width: 28,
+    height: 28,
+    marginRight: 6,
+    borderRadius: 4,
   },
+
+  summary: {
+    marginTop: 15,
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: "#e5e7eb",
+  },
+
   summaryRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 4,
   },
+
+  total: {
+    fontWeight: "bold",
+    fontSize: 12,
+  },
+
   footer: {
-    marginTop: 30,
-    padding: 12,
-    borderTop: "1 solid #e5e7eb",
+    marginTop: 25,
     textAlign: "center",
   },
+
   footerText: {
-    fontSize: 11,
+    fontSize: 10,
     color: "#6b7280",
   },
 });
 
-const OrderInvoice = ({ payload, products }: Order) => {
-  const date = new Date(payload.createdAt);
-  const currentDate = date.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
-  const deliveryFee = payload.shippingCost;
-  const stripHtml = (html: string) => html.replace(/<[^>]*>?/gm, "");
+const OrderInvoice = ({ payload, products }: OrderInvoiceProps) => {
+  const date = new Date(payload.createdAt).toLocaleDateString("en-GB");
+
+  const subtotal = products.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
+
+  const total = subtotal + payload.shippingCost;
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
+
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>Order Invoice</Text>
+          <Text style={styles.brand}>Borkotmoy Ponno</Text>
+          <Text style={styles.title}>Official Invoice</Text>
         </View>
 
         {/* Customer Info */}
@@ -153,35 +171,44 @@ const OrderInvoice = ({ payload, products }: Order) => {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Order Details</Text>
           <Text style={styles.text}>Order ID: {payload.trackingId}</Text>
-          <Text style={styles.text}>Order Date: {currentDate}</Text>
+          <Text style={styles.text}>Date: {date}</Text>
           <Text style={styles.text}>
-            Payment Method:{" "}
+            Payment:{" "}
             {payload.paymentInfo.method === "cash"
               ? "Cash on Delivery"
               : payload.paymentInfo.method}
           </Text>
-          <Text style={styles.text}>Delivery Fee: {deliveryFee} TK</Text>
+          <Text style={styles.text}>Shipping: {payload.shippingCost} TK</Text>
         </View>
 
-        {/* Product Table */}
+        {/* Products */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Order Items</Text>
+          <Text style={styles.sectionTitle}>Products</Text>
+
           <View style={styles.table}>
-            <View style={styles.tableRow}>
-              <Text style={styles.tableHeaderCell}>Product</Text>
-              <Text style={styles.tableHeaderCell}>Qty</Text>
-              <Text style={styles.tableHeaderCell}>Price</Text>
-              <Text style={styles.tableHeaderCell}>Total</Text>
+
+            {/* Header */}
+            <View style={[styles.row, styles.headerRow]}>
+              <Text style={styles.colProduct}>Product</Text>
+              <Text style={styles.colQty}>Qty</Text>
+              <Text style={styles.colPrice}>Price</Text>
+              <Text style={styles.colTotal}>Total</Text>
             </View>
-            {products.map((item: any, i: number) => (
-              <View key={i} style={styles.tableRow}>
-                <Text style={styles.tableCell}>
-                  {stripHtml(item.product.productName)}
-                </Text>
-                <Text style={styles.tableCell}>{item.quantity}</Text>
-                <Text style={styles.tableCell}>{item.price ?? 0} TK</Text>
-                <Text style={styles.tableCell}>
-                  {(item.price ?? 0) * item.quantity} TK
+
+            {/* Rows */}
+            {products.map((item, i) => (
+              <View key={i} style={styles.row}>
+                <View style={styles.colProduct}>
+                  {item.image ? (
+                    <PdfImage src={item.image} style={styles.img} />
+                  ) : null}
+                  <Text>{item.name}</Text>
+                </View>
+
+                <Text style={styles.colQty}>{item.quantity}</Text>
+                <Text style={styles.colPrice}>{item.price} TK</Text>
+                <Text style={styles.colTotal}>
+                  {item.price * item.quantity} TK
                 </Text>
               </View>
             ))}
@@ -189,30 +216,30 @@ const OrderInvoice = ({ payload, products }: Order) => {
         </View>
 
         {/* Summary */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Summary</Text>
+        <View style={styles.summary}>
           <View style={styles.summaryRow}>
-            <Text>Subtotal:</Text>
-            <Text>
-              {Number(payload?.totalAmount) - Number(payload?.shippingCost)} TK
-            </Text>
+            <Text>Subtotal</Text>
+            <Text>{subtotal} TK</Text>
           </View>
+
           <View style={styles.summaryRow}>
-            <Text>Delivery Fee:</Text>
-            <Text>{payload?.shippingCost} TK</Text>
+            <Text>Shipping</Text>
+            <Text>{payload.shippingCost} TK</Text>
           </View>
+
           <View style={styles.summaryRow}>
-            <Text style={{ fontWeight: "bold" }}>Total:</Text>
-            <Text style={{ fontWeight: "bold" }}>
-              {payload?.totalAmount} TK
-            </Text>
+            <Text style={styles.total}>Total</Text>
+            <Text style={styles.total}>{total} TK</Text>
           </View>
         </View>
 
         {/* Footer */}
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Thank you for your order!</Text>
+          <Text style={styles.footerText}>
+            Thank you for shopping with us
+          </Text>
         </View>
+
       </Page>
     </Document>
   );

@@ -1,12 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      "plus.unsplash.com",
-      "i.ibb.co",
-      "i.ibb.com",
-      "example.com",
-      "th.bing.com",
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'i.ibb.co.com', // This fixes your specific error
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.ibb.co',
+      },
+      {
+        protocol: 'https',
+        hostname: 'plus.unsplash.com',
+      },
+      // Add others as needed
     ],
   },
   output: "standalone",
