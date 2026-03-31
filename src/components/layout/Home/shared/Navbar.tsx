@@ -161,12 +161,7 @@ const Navbar = () => {
       </div>
 
       {/* Overlay */}
-      {showMobileMenu && (
-        <div
-          className="fixed inset-0 bg-black/20 z-[9999] sm:hidden"
-          onClick={() => setShowMobileMenu(false)}
-        />
-      )}
+    
 
       {/* Mobile Search Overlay */}
       {isOpenSearch && (

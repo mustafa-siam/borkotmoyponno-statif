@@ -153,7 +153,31 @@ const ShopDetails = ({ slug }: { slug: string }) => {
  
       // Simulate order placement with static data
       await new Promise((res) => setTimeout(res, 800));
-      localStorage.setItem("orderData", JSON.stringify({ payload, status: "success" }));
+      localStorage.setItem(
+  "orderData",
+  JSON.stringify({
+    ...payload,
+    products: [
+      {
+        slug: _id,
+        name: selectedVariant ? selectedVariant.name : productName,
+        price: selectedVariant ? selectedVariant.price : displayPrice,
+        image: selectedVariant ? selectedVariant.image : displayImage,
+        unit: selectedVariant ? selectedVariant.name : "pcs",
+        quantity,
+      },
+    ],
+    trackingId: "ORD-" + Date.now(),
+    createdAt: new Date().toISOString(),
+    totalAmount: total,
+    shippingCost:
+      data.shipping === "dhakaCity"
+        ? shipping?.dhakaCity
+        : data.shipping === "dhakaCityOuter"
+        ? shipping?.dhakaCityOuter
+        : shipping?.outsideDhaka,
+  })
+);
       router.push(`/success`);
       toast.success("Order Placed Successfully!");
  
