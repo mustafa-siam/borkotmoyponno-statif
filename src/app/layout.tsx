@@ -17,22 +17,6 @@ export const metadata: Metadata = {
   title: "Khidmah Organic",
   description:
     "Khidmah Organic is an e-commerce platform that specializes in selling organic and natural products, including food items, cosmetics, and household goods. The platform aims to provide customers with high-quality, eco-friendly products sourced from trusted suppliers.",
-    icons: {
-    icon: [
-      {
-        url: "/logo.svg?v=1", // Added versioning to break cache
-        type: "image/svg+xml",
-      },
-    ],
-    shortcut: ["/logo.svg?v=1"],
-    apple: [
-      {
-        url: "/logo.svg?v=1",
-        sizes: "180x180",
-        type: "image/svg+xml",
-      },
-    ],
-  },
   openGraph: {
     title: "Khidmah Organic",
     description:
