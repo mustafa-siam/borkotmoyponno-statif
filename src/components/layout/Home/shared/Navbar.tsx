@@ -66,10 +66,10 @@ const Navbar = () => {
         <div className="max-w-screen-xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
           
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <Image src="/carclelogo.svg" alt="Logo" width={80} height={80} className="h-9 sm:h-11 w-auto" />
-            <span className="text-sm sm:text-lg font-semibold text-deepGreen">
-              Borkotmoy Ponno
+          <Link href="/" className="flex items-center gap-1">
+            <Image src="/logo.svg" alt="Logo" width={80} height={80} className="h-16 w-16 " />
+            <span className="text-lg sm:text-xl tracking-tight font-semibold text-deepGreen">
+              Khidmah Organic
             </span>
           </Link>
 

@@ -14,20 +14,26 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-14">
           {/* Brand Section */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-3 mb-6">
-              <Link href="/">
-                <Image
-                  width={44}
-                  height={44}
-                  src="/carclelogo.svg"
-                  alt="Logo"
-                />
-              </Link>
-              <h2 className="text-2xl font-medium tracking-tight">
-                Borkotmoy Ponno
-              </h2>
-            </div>
-
+           <div className="flex items-center gap-4 mb-8">
+  <Link 
+    href="/" 
+    className="bg-white rounded-full shadow-sm hover:shadow-md transition-shadow duration-300 flex items-center justify-center w-16 h-16"
+  >
+    <Image
+      width={70}
+      height={70}
+      src="/logo.svg"
+      className="object-contain"
+      alt="Khidmah Organic Logo"
+    />
+  </Link>
+  <div>
+    <h2 className="text-3xl font-semibold tracking-tight">
+      Khidmah Organic
+    </h2>
+    <p className="text-sm text-white/80 font-medium">Nature's Best Promise</p>
+  </div>
+</div>
             <p className="text-gray-400 text-base leading-relaxed mb-8 max-w-md">
               বরকতময় পণ্য খাঁটি ও হালাল পণ্যের নিশ্চয়তা, বিশ্বস্ততার
               প্রতিশ্রুতি। আল্লাহর সন্তুষ্টি ও আপনাদের বিশ্বাস অর্জন করাই আমাদের

@@ -16,8 +16,9 @@ export default function Banner() {
   const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: false }));
 
   const bannerImages = [
-  "/web.png",
-  "/banner.jpeg",
+  "/banner1.jpg",
+  "/banner3.jpg",
+  "/banner2.jpg",
 ];
   // const bannerImages = [
   //   "https://i.ibb.co/7Jt1TYd5/image.webp",
