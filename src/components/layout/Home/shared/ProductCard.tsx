@@ -45,7 +45,7 @@ export default function ProductCard({ product, view = 'grid' }: Props) {
       <div className="flex gap-4 border border-gray-100 bg-white p-4 hover:shadow-sm transition-shadow">
         <Link
           href={`/step/${product?.slug}`}
-          className="relative w-24 h-24 flex-shrink-0 overflow-hidden bg-gray-50"
+          className="relative w-32 h-32 flex-shrink-0 overflow-hidden bg-gray-50"
         >
           <Image
             src={product.productImage}
@@ -111,15 +111,16 @@ export default function ProductCard({ product, view = 'grid' }: Props) {
       )}
 
       <Link href={`/step/${product?.slug}`}>
-        <div className="relative h-48 overflow-hidden bg-gray-50">
-          <Image
-            src={product.productImage}
-            alt={product.productName}
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
-          />
-        </div>
-      </Link>
+  {/* উচ্চতা h-48 থেকে বাড়িয়ে h-64 বা h-72 করা হয়েছে */}
+  <div className="relative h-72 overflow-hidden bg-gray-50 p-2"> 
+    <Image
+      src={product.productImage}
+      alt="product image"
+      fill
+      className="object-cover group-hover:scale-110 transition-transform duration-500" // object-contain করা হয়েছে
+    />
+  </div>
+</Link>
 
       <div className="p-4 flex flex-col flex-1">
         <span className="text-xs text-deepGreen bg-mint-background px-2 py-0.5 w-fit">

@@ -101,9 +101,9 @@ const ShopDetails = ({ slug }: { slug: string }) => {
   const displayPrice = selectedVariant ? selectedVariant.price : price;
   const displayImage = selectedVariant ? selectedVariant.image : productImage;
  
-  // ── Related products (same category, excluding current) ───────────────────
+  // ── Related products (same category name, excluding current) ──────────────
   const allData = products.filter(
-    (p) => p.category._id === category._id && p.slug !== slug
+    (p) => p.category.categoryName === category.categoryName && p.slug !== slug
   );
  
   // ── Shipping costs ─────────────────────────────────────────────────────────
@@ -895,15 +895,12 @@ const ShopDetails = ({ slug }: { slug: string }) => {
               </p>
               {allData.length > 0 ? (
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-              
                     {allData.slice(0,4).map((product) => (
                       <ProductCard
-                                    key={product._id}  
-                                    product={product}
-                                
-                                  />
+                        key={product._id}  
+                        product={product}
+                      />
                     ))}
-                
                 </div>
               ) : (
                 <div className="col-span-full flex flex-col items-center justify-center text-center p-10 bg-white rounded-lg shadow-md border border-gray-200">
@@ -922,4 +919,3 @@ const ShopDetails = ({ slug }: { slug: string }) => {
 };
  
 export default ShopDetails;
- 

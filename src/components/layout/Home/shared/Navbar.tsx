@@ -3,15 +3,18 @@
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { MdLocalGroceryStore } from "react-icons/md";
 import { GrMenu } from "react-icons/gr";
 import { TiDeleteOutline } from "react-icons/ti";
 import { AiOutlineSearch } from "react-icons/ai";
 import { usePathname } from "next/navigation";
-import { useHandleFindProductQuery } from "@/redux/features/product/productApi";
 import { useLoggedInUserQuery } from "@/redux/features/users/userApi";
 import { Search } from "lucide-react";
+import { products } from "@/hooks/useProducts";
+
+// Strip HTML tags for plain-text comparison
+const stripHtml = (html: string) => html.replace(/<[^>]*>/g, "").trim();
 
 const Navbar = () => {
   const [isOpenSearch, setIsOpenSearch] = useState(false);
@@ -19,15 +22,28 @@ const Navbar = () => {
   const [cartCount, setCartCount] = useState(0);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
-  const { data, refetch } = useHandleFindProductQuery({
-    page: 1,
-    limit: 10000,
-    search,
-  });
-
   const { data: user } = useLoggedInUserQuery();
-  const products = data?.payload || [];
   const path = usePathname();
+
+  // Search against productName (Bangla/English), slug, category, and SEO tags
+  const searchResults = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return [];
+    return products.filter((p) => {
+      const name = stripHtml(p.productName).toLowerCase();
+      const slug = p.slug.toLowerCase();
+      const category = p.category?.categoryName?.toLowerCase() ?? "";
+      const tags = (p.seo?.tag ?? []).join(" ").toLowerCase();
+      const tagline = stripHtml(p.tagline ?? "").toLowerCase();
+      return (
+        name.includes(q) ||
+        slug.includes(q) ||
+        category.includes(q) ||
+        tags.includes(q) ||
+        tagline.includes(q)
+      );
+    });
+  }, [search]);
 
   useEffect(() => {
     const updateCartCount = () => {
@@ -77,30 +93,45 @@ const Navbar = () => {
               <Input
                 className="bg-gray-50 pl-9 py-2 w-60 focus:w-72 transition-all"
                 placeholder="Search products..."
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                  refetch();
-                }}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
               />
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
 
-              {search && products.length > 0 && (
+              {search.trim() && (
                 <div className="absolute top-12 right-0 w-80 bg-white shadow-xl z-[10000] max-h-96 overflow-y-auto border">
-                  {products.map((product:any) => (
-                    <Link
-                      key={product._id}
-                      href={`/step/${product.slug}`}
-                      className="flex items-center gap-3 p-3 hover:bg-gray-50"
-                    >
-                      <div className="w-12 h-12 relative bg-gray-100">
-                        <Image src={product.productImage} alt={product.productName} fill className="object-cover" />
-                      </div>
-                      <div>
-                        <h4 className="text-sm">{product.productName}</h4>
-                        <p className="text-xs text-gray-400">৳ {product.price}</p>
-                      </div>
-                    </Link>
-                  ))}
+                  {searchResults.length > 0 ? (
+                    searchResults.map((product) => (
+                      <Link
+                        key={product._id}
+                        href={`/step/${product.slug}`}
+                        className="flex items-center gap-3 p-3 hover:bg-gray-50 border-b border-gray-50 last:border-0"
+                        onClick={() => setSearch("")}
+                      >
+                        <div className="w-12 h-12 relative bg-gray-100 flex-shrink-0">
+                          <Image
+                            src={product.productImage}
+                            alt={stripHtml(product.productName)}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4
+                            className="text-sm text-gray-800 leading-snug line-clamp-2"
+                            dangerouslySetInnerHTML={{ __html: product.productName }}
+                          />
+                          <p className="text-xs text-forest-green font-semibold mt-0.5">
+                            ৳ {product.price}
+                          </p>
+                        </div>
+                      </Link>
+                    ))
+                  ) : (
+                    <div className="p-4 text-center text-sm text-gray-400">
+                      কোনো পণ্য পাওয়া যায়নি
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -160,44 +191,63 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Overlay */}
-    
-
       {/* Mobile Search Overlay */}
       {isOpenSearch && (
         <div className="fixed inset-0 z-[10001] bg-white px-5 pt-6 sm:hidden">
           <div className="flex items-center gap-3 mb-4">
-            <button onClick={() => setIsOpenSearch(false)}>
+            <button
+              onClick={() => {
+                setIsOpenSearch(false);
+                setSearch("");
+              }}
+            >
               <TiDeleteOutline className="text-2xl" />
             </button>
             <Input
               autoFocus
-              placeholder="Search..."
-              onChange={(e) => {
-                setSearch(e.target.value);
-                refetch();
-              }}
+              placeholder="পণ্য খুঁজুন... (বাংলা / English)"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
 
-          {search && products.length > 0 && (
+          {search.trim() && (
             <div className="overflow-y-auto max-h-[80vh]">
-              {products.map((product: any) => (
-                <Link
-                  key={product._id}
-                  href={`/step/${product.slug}`}
-                  className="flex gap-3 p-3 border-b"
-                  onClick={() => setIsOpenSearch(false)}
-                >
-                  <div className="w-12 h-12 relative bg-gray-100">
-                    <Image src={product.productImage} alt={product.productName} fill className="object-cover" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm">{product.productName}</h4>
-                    <p className="text-sm font-semibold">৳ {product.price}</p>
-                  </div>
-                </Link>
-              ))}
+              {searchResults.length > 0 ? (
+                searchResults.map((product) => (
+                  <Link
+                    key={product._id}
+                    href={`/step/${product.slug}`}
+                    className="flex gap-3 p-3 border-b"
+                    onClick={() => {
+                      setIsOpenSearch(false);
+                      setSearch("");
+                    }}
+                  >
+                    <div className="w-12 h-12 relative bg-gray-100 flex-shrink-0">
+                      <Image
+                        src={product.productImage}
+                        alt={stripHtml(product.productName)}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4
+                        className="text-sm text-gray-800 leading-snug line-clamp-2"
+                        dangerouslySetInnerHTML={{ __html: product.productName }}
+                      />
+                      <p className="text-sm font-semibold text-forest-green mt-0.5">
+                        ৳ {product.price}
+                      </p>
+                    </div>
+                  </Link>
+                ))
+              ) : (
+                <div className="py-10 text-center text-sm text-gray-400">
+                  কোনো পণ্য পাওয়া যায়নি
+                </div>
+              )}
             </div>
           )}
         </div>

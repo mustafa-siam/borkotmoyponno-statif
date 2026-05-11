@@ -16,10 +16,14 @@ export default function Banner() {
   const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: false }));
 
   const bannerImages = [
-    "https://i.ibb.co/7Jt1TYd5/image.webp",
-    "https://i.ibb.co/7Jt1TYd5/image.webp",
-    "https://i.ibb.co/7Jt1TYd5/image.webp",
-  ];
+  "/web.png",
+  "/banner.jpeg",
+];
+  // const bannerImages = [
+  //   "https://i.ibb.co/7Jt1TYd5/image.webp",
+  //   "https://i.ibb.co.com/WNBrPXbS/banner.jpg",
+  //   "https://i.ibb.co/7Jt1TYd5/image.webp",
+  // ];
 
   return (
     <div className="px-4 sm:px-[5%] mb-6 sm:mb-6 sm:mt-4">
@@ -37,7 +41,7 @@ export default function Banner() {
                   width={500}
                   src={src}
                   alt={`Banner Image ${index + 1}`}
-                  className="w-full h-[180px] sm:h-[300px] lg:h-[480px] object-cover"
+                  className="w-full h-[180px] sm:h-[300px] lg:h-[480px] object-cover object-[center_50%]"
                   priority={index === 0}
                 />
               </div>
