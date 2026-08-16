@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     description:
       "Khidmah Organic is an e-commerce platform that specializes in selling organic and natural products, including food items, cosmetics, and household goods. The platform aims to provide customers with high-quality, eco-friendly products sourced from trusted suppliers.",
     url: process.env.NEXT_PUBLIC_SITE_URL || "https://borkotmoyponno.com",
-    siteName: "Borkotmoy Ponno",
+    siteName: "Khidma Organic",
     images: [
       {
         url: "https://borkotmoyponno.com/web.png",

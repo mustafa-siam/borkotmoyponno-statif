@@ -85,10 +85,10 @@ export default function Reliable() {
             প্রতিদিনের পুষ্টি চাহিদা মেটাতে প্রাকৃতিক সমাধান।
           </p>
           <a
-            href="tel:+8801342106348"
+            href="tel:+8801787878743"
             className="flex w-fit items-center gap-2 px-10 py-2 text-white bg-forest-green font-medium rounded mt-5 "
           >
-            <ImPhone /> +8801342106348
+            <ImPhone /> +8801787878743
 
           </a>
         </div>

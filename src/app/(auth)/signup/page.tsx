@@ -61,7 +61,7 @@ const SignUp = () => {
               Create Account
             </h2>
             <p className="text-gray-500 text-center text-sm">
-              Enter your details below to join Borkotmoy Ponno
+              Enter your details below to join Khidma Organic
             </p>
           </div>
 
@@ -75,9 +75,8 @@ const SignUp = () => {
                 <input
                   type="text"
                   placeholder="Enter your name"
-                  className={`w-full px-4 py-3 rounded-lg border ${
-                    errors.name ? "border-red-400" : "border-gray-200"
-                  } focus:outline-none focus:ring-2 focus:ring-forest-green/20 focus:border-forest-green transition-all bg-gray-50/50 focus:bg-white`}
+                  className={`w-full px-4 py-3 rounded-lg border ${errors.name ? "border-red-400" : "border-gray-200"
+                    } focus:outline-none focus:ring-2 focus:ring-forest-green/20 focus:border-forest-green transition-all bg-gray-50/50 focus:bg-white`}
                   {...register("name", {
                     required: "Name is required",
                     minLength: {
@@ -101,9 +100,8 @@ const SignUp = () => {
                 <input
                   type="email"
                   placeholder="name@example.com"
-                  className={`w-full px-4 py-3 rounded-lg border ${
-                    errors.email ? "border-red-400" : "border-gray-200"
-                  } focus:outline-none focus:ring-2 focus:ring-forest-green/20 focus:border-forest-green transition-all bg-gray-50/50 focus:bg-white`}
+                  className={`w-full px-4 py-3 rounded-lg border ${errors.email ? "border-red-400" : "border-gray-200"
+                    } focus:outline-none focus:ring-2 focus:ring-forest-green/20 focus:border-forest-green transition-all bg-gray-50/50 focus:bg-white`}
                   {...register("email", {
                     required: "Email is required",
                     pattern: {
@@ -127,9 +125,8 @@ const SignUp = () => {
                 <input
                   type="password"
                   placeholder="Enter your password"
-                  className={`w-full px-4 py-3 rounded-lg border ${
-                    errors.password ? "border-red-400" : "border-gray-200"
-                  } focus:outline-none focus:ring-2 focus:ring-forest-green/20 focus:border-forest-green transition-all bg-gray-50/50 focus:bg-white`}
+                  className={`w-full px-4 py-3 rounded-lg border ${errors.password ? "border-red-400" : "border-gray-200"
+                    } focus:outline-none focus:ring-2 focus:ring-forest-green/20 focus:border-forest-green transition-all bg-gray-50/50 focus:bg-white`}
                   {...register("password", {
                     required: "Password is required",
                     minLength: {

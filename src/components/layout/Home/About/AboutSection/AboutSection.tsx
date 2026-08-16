@@ -15,7 +15,7 @@ export default function AboutSection() {
         />
         <div className="text-base text-gray-500 space-y-5 leading-relaxed">
           <p>
-            🌿 <span className="font-semibold text-forest-green">বরকতময় পণ্য</span> — বিশ্বাস, বরকত ও ভালোবাসার একটি নাম
+            🌿 <span className="font-semibold text-forest-green">খিদমা অর্গানিক</span> — বিশ্বাস, বরকত ও ভালোবাসার একটি নাম
           </p>
 
           <p>
@@ -23,7 +23,7 @@ export default function AboutSection() {
           </p>
 
           <p>
-            <span className="italic">‘বরকতময় পণ্য’</span> কেবল একটি ব্র্যান্ড নয়, এটি একটি ইবাদতের মাধ্যম। প্রতিটি পণ্যের পেছনে রয়েছে পরিশ্রম, দোয়া, এবং আমানতের দায়িত্ববোধ। আমরা শুধু পণ্য দিই না, আপনাকে পৌঁছে দিই প্রাকৃতিক বিশুদ্ধতা আর একটুখানি প্রশান্তি।
+            <span className="italic">‘খিদমা অর্গানিক’</span> কেবল একটি ব্র্যান্ড নয়, এটি একটি ইবাদতের মাধ্যম। প্রতিটি পণ্যের পেছনে রয়েছে পরিশ্রম, দোয়া, এবং আমানতের দায়িত্ববোধ। আমরা শুধু পণ্য দিই না, আপনাকে পৌঁছে দিই প্রাকৃতিক বিশুদ্ধতা আর একটুখানি প্রশান্তি।
           </p>
 
           <p>
@@ -35,7 +35,7 @@ export default function AboutSection() {
           </blockquote>
 
           <p>
-            <span className="font-semibold text-forest-green">বরকতময় পণ্য</span> — হালাল রিজিকের পথে একটি বিশ্বস্ত নাম।
+            <span className="font-semibold text-forest-green">খিদমা অর্গানিক</span> — হালাল রিজিকের পথে একটি বিশ্বস্ত নাম।
           </p>
 
           <p>
@@ -50,10 +50,10 @@ export default function AboutSection() {
           <p className="flex items-center gap-2">
             <span className="font-semibold text-midnight-navy">Mob:</span>
             <a
-              href="tel:+8801342106348"
+              href="tel:+8801787878743"
               className="text-forest-green hover:text-deepGreen transition-colors duration-300"
             >
-              +8801342106348
+              +8801787878743
             </a>
           </p>
           <p className="flex items-center gap-2">
@@ -63,10 +63,10 @@ export default function AboutSection() {
           <p className="flex items-center gap-2">
             <span className="font-semibold text-midnight-navy">Email:</span>
             <a
-              href="mailto:borkotmoyponno@gmail.com"
+              href="mailto:khidma.info.test@gmail.com"
               className="text-forest-green hover:text-deepGreen transition-colors duration-300"
             >
-              borkotmoyponno@gmail.com
+              khidma.info.test@gmail.com
             </a>
           </p>
         </div>

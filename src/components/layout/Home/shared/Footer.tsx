@@ -14,28 +14,28 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-14">
           {/* Brand Section */}
           <div className="lg:col-span-2">
-           <div className="flex items-center gap-4 mb-8">
-  <Link 
-    href="/" 
-    className="bg-white rounded-full shadow-sm hover:shadow-md transition-shadow duration-300 flex items-center justify-center w-16 h-16"
-  >
-    <Image
-      width={70}
-      height={70}
-      src="/logo.svg"
-      className="object-contain"
-      alt="Khidmah Organic Logo"
-    />
-  </Link>
-  <div>
-    <h2 className="text-3xl font-semibold tracking-tight">
-      Khidmah Organic
-    </h2>
-    <p className="text-sm text-white/80 font-medium">Nature's Best Promise</p>
-  </div>
-</div>
+            <div className="flex items-center gap-4 mb-8">
+              <Link
+                href="/"
+                className="bg-white rounded-full shadow-sm hover:shadow-md transition-shadow duration-300 flex items-center justify-center w-16 h-16"
+              >
+                <Image
+                  width={70}
+                  height={70}
+                  src="/logo.svg"
+                  className="object-contain"
+                  alt="Khidmah Organic Logo"
+                />
+              </Link>
+              <div>
+                <h2 className="text-3xl font-semibold tracking-tight">
+                  Khidmah Organic
+                </h2>
+                <p className="text-sm text-white/80 font-medium">Nature's Best Promise</p>
+              </div>
+            </div>
             <p className="text-gray-400 text-base leading-relaxed mb-8 max-w-md">
-              বরকতময় পণ্য খাঁটি ও হালাল পণ্যের নিশ্চয়তা, বিশ্বস্ততার
+              খিদমা অর্গানিক  খাঁটি ও হালাল পণ্যের নিশ্চয়তা, বিশ্বস্ততার
               প্রতিশ্রুতি। আল্লাহর সন্তুষ্টি ও আপনাদের বিশ্বাস অর্জন করাই আমাদের
               প্রধান লক্ষ্য। ইনশাআল্লাহ, সুন্নাহর পথে বরকত লাভের জন্য
               প্রতিজ্ঞাবদ্ধ।
@@ -44,7 +44,7 @@ export default function Footer() {
             {/* Social Icons */}
             <div className="flex gap-3">
               <a
-                href="https://www.facebook.com/share/1F6fx8poq6/"
+                href="#"
                 target="_blank"
                 className="w-9 h-9 bg-white/10 hover:bg-forest-green flex items-center justify-center transition-all duration-200 cursor-pointer"
               >
@@ -128,10 +128,10 @@ export default function Footer() {
                 <div>
                   <p className="text-xs text-gray-500 mb-0.5">ফোন</p>
                   <a
-                    href="tel:+8801342106348"
+                    href="tel:+8801787878743"
                     className="text-gray-300 hover:text-white transition-colors text-sm"
                   >
-                    +880 1342-106348
+                    +880 1342-****12
                   </a>
                 </div>
               </div>
@@ -143,10 +143,10 @@ export default function Footer() {
                 <div>
                   <p className="text-xs text-gray-500 mb-0.5">ইমেইল</p>
                   <a
-                    href="mailto:borkotmoyponno@gmail.com"
+                    href="mailto:khidma.info.test@gmail.com"
                     className="text-gray-300 hover:text-white transition-colors text-sm"
                   >
-                    borkotmoyponno@gmail.com
+                    khidma.info.test@gmail.com
                   </a>
                 </div>
               </div>
@@ -177,7 +177,7 @@ export default function Footer() {
         <div className="border-t border-white/10 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-500 text-sm text-center md:text-left">
-              © ২০২৫ Borkotmoy Ponno. সর্বস্বত্ব সংরক্ষিত।
+              © ২০২৫ Khidma Organic. সর্বস্বত্ব সংরক্ষিত।
             </p>
 
             <div className="flex items-center gap-6 text-sm">

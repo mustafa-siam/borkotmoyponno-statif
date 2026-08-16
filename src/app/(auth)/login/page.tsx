@@ -57,7 +57,7 @@ const Login = () => {
               Welcome Back
             </h2>
             <p className="text-gray-500 text-center text-sm">
-              Sign in to your Borkotmoy Ponno account
+              Sign in to your Khidma Organic account
             </p>
           </div>
 
@@ -70,9 +70,8 @@ const Login = () => {
                 <input
                   type="email"
                   placeholder="name@example.com"
-                  className={`w-full px-4 py-3 rounded-lg border ${
-                    errors.email ? "border-red-400" : "border-gray-200"
-                  } focus:outline-none focus:ring-2 focus:ring-forest-green/20 focus:border-forest-green transition-all bg-gray-50/50 focus:bg-white`}
+                  className={`w-full px-4 py-3 rounded-lg border ${errors.email ? "border-red-400" : "border-gray-200"
+                    } focus:outline-none focus:ring-2 focus:ring-forest-green/20 focus:border-forest-green transition-all bg-gray-50/50 focus:bg-white`}
                   {...register("email", {
                     required: "Email is required",
                     pattern: {
@@ -105,9 +104,8 @@ const Login = () => {
                   <input
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
-                    className={`w-full px-4 py-3 rounded-lg border ${
-                      errors.password ? "border-red-400" : "border-gray-200"
-                    } focus:outline-none focus:ring-2 focus:ring-forest-green/20 focus:border-forest-green transition-all bg-gray-50/50 focus:bg-white`}
+                    className={`w-full px-4 py-3 rounded-lg border ${errors.password ? "border-red-400" : "border-gray-200"
+                      } focus:outline-none focus:ring-2 focus:ring-forest-green/20 focus:border-forest-green transition-all bg-gray-50/50 focus:bg-white`}
                     {...register("password", {
                       required: "Password is required",
                       minLength: {

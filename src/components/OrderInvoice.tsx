@@ -155,7 +155,7 @@ const OrderInvoice = ({ payload, products }: OrderInvoiceProps) => {
 
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.brand}>Borkotmoy Ponno</Text>
+          <Text style={styles.brand}>Khidma Organic</Text>
           <Text style={styles.title}>Official Invoice</Text>
         </View>
 

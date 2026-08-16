@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic"; // <--- Add this to fix the build error
 
 export async function generateMetadata({ params }: any) {
   const { slug } = params;
-  
+
   try {
     // Add a timeout or check if we are in a build environment if needed
     const response = await fetch(
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: any) {
     // This block runs if the DNS fails or the server is down
     console.error("Metadata fetch failed for slug:", slug);
     return {
-      title: "Product | Ponno Bari",
+      title: "Product | Khidma Organic",
       description: "High quality authentic products.",
     };
   }

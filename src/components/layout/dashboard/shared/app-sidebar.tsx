@@ -40,7 +40,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     },
     teams: [
       {
-        name: "Borkotmoy Ponno",
+        name: "Khidma Organic",
         logo: BadgeCheck,
         plan: "Dhaka, Bangladesh. ",
         url: "/",
@@ -56,20 +56,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
       ...(findUser?.role === "admin"
         ? [
-            {
-              title: "Users",
-              url: "#",
-              icon: Users,
-              isActive: false,
-              items: [
-                {
-                  title: "Manage Users",
-                  url: "/dashboard/users",
-                  icon: UserCog,
-                },
-              ],
-            },
-          ]
+          {
+            title: "Users",
+            url: "#",
+            icon: Users,
+            isActive: false,
+            items: [
+              {
+                title: "Manage Users",
+                url: "/dashboard/users",
+                icon: UserCog,
+              },
+            ],
+          },
+        ]
         : []),
 
       {

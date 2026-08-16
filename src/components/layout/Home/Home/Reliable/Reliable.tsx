@@ -2,29 +2,29 @@
 import { CheckCircle, Phone, Leaf, Shield, Heart, Award } from "lucide-react";
 
 export default function ReliableOrganicStore() {
-const features = [
-  {
-    title: "সুস্থ ও প্রাকৃতিক খাবার, স্বাস্থ্যসচেতনদের জন্য",
-  },
-  {
-    title: "প্রতিদিনের তাজা ও গুণগতমানসম্পন্ন পণ্যের নিশ্চয়তা।",
-  },
-  {
-    title: "রোগপ্রতিরোধে সহায়ক ভেষজ উপাদানসমূহ।",
-  },
-  {
-    title: "বিজ্ঞানসম্মত প্যাকেজিং ও সঠিক সংরক্ষণ।",
-  },
-  {
-    title: "বিশ্বস্ত উৎস থেকে সংগ্রহ করা অরগানিক খাদ্য।",
-  },
-  {
-    title: "সহজ অনলাইন অর্ডার ও দ্রুত হোম ডেলিভারি।",
-  },
-  {
-    title: "পরিবেশবান্ধব ও টেকসই কৃষি পণ্যের সমাহার।",
-  },
-];
+  const features = [
+    {
+      title: "সুস্থ ও প্রাকৃতিক খাবার, স্বাস্থ্যসচেতনদের জন্য",
+    },
+    {
+      title: "প্রতিদিনের তাজা ও গুণগতমানসম্পন্ন পণ্যের নিশ্চয়তা।",
+    },
+    {
+      title: "রোগপ্রতিরোধে সহায়ক ভেষজ উপাদানসমূহ।",
+    },
+    {
+      title: "বিজ্ঞানসম্মত প্যাকেজিং ও সঠিক সংরক্ষণ।",
+    },
+    {
+      title: "বিশ্বস্ত উৎস থেকে সংগ্রহ করা অরগানিক খাদ্য।",
+    },
+    {
+      title: "সহজ অনলাইন অর্ডার ও দ্রুত হোম ডেলিভারি।",
+    },
+    {
+      title: "পরিবেশবান্ধব ও টেকসই কৃষি পণ্যের সমাহার।",
+    },
+  ];
 
 
   const stats = [
@@ -101,12 +101,12 @@ const features = [
             {/* Features */}
             <div className="space-y-2.5">
               {features.map((feature, index) => (
-                  <div className="flex items-start gap-2.5" key={index}>
-                    <div className="flex-shrink-0 w-5 h-5 bg-forest-green/10 flex items-center justify-center mt-0.5">
-                      <CheckCircle className="w-3 h-3 text-forest-green" />
-                    </div>
-                    <p className="text-gray-600 text-[15px]">{feature.title}</p>
+                <div className="flex items-start gap-2.5" key={index}>
+                  <div className="flex-shrink-0 w-5 h-5 bg-forest-green/10 flex items-center justify-center mt-0.5">
+                    <CheckCircle className="w-3 h-3 text-forest-green" />
                   </div>
+                  <p className="text-gray-600 text-[15px]">{feature.title}</p>
+                </div>
               ))}
             </div>
 
@@ -119,7 +119,7 @@ const features = [
                 <div className="w-8 h-8 bg-white/15 flex items-center justify-center">
                   <Phone className="w-4 h-4" />
                 </div>
-                <span className="">+8801342-106348</span>
+                <span className="">+88013**-****12</span>
               </a>
             </div>
           </div>

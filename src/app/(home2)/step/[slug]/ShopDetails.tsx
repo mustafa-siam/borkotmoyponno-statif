@@ -54,9 +54,9 @@ const ShopDetails = ({ slug }: { slug: string }) => {
   const [placeOrderLoading, setPlaceOrderLoading] = useState(false);
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
- 
+
   const router = useRouter();
- 
+
   const {
     register,
     handleSubmit,
@@ -66,12 +66,12 @@ const ShopDetails = ({ slug }: { slug: string }) => {
   } = useForm<FormData>({
     defaultValues: { shipping: "dhakaCity", payment: "cash" },
   });
- 
+
   const paymentMethod = watch("payment");
- 
+
   // ── Find product from static data ──────────────────────────────────────────
   const productData = products.find((p) => p.slug === slug) ?? products[0];
- 
+
   const {
     _id,
     productName,
@@ -88,7 +88,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
     productType,
     variants,
   } = productData;
- 
+
   // ── Variant init ───────────────────────────────────────────────────────────
   useEffect(() => {
     if (productType === "variant" && variants?.length > 0) {
@@ -97,26 +97,26 @@ const ShopDetails = ({ slug }: { slug: string }) => {
       setSelectedVariant(null);
     }
   }, [productType, variants]);
- 
+
   const displayPrice = selectedVariant ? selectedVariant.price : price;
   const displayImage = selectedVariant ? selectedVariant.image : productImage;
- 
+
   // ── Related products (same category name, excluding current) ──────────────
   const allData = products.filter(
     (p) => p.category.categoryName === category.categoryName && p.slug !== slug
   );
- 
+
   // ── Shipping costs ─────────────────────────────────────────────────────────
   const shippingCost: Record<ShippingOption, number> = {
     dhakaCity: shipping?.dhakaCity ?? 0,
     dhakaCityOuter: shipping?.dhakaCityOuter ?? 0,
     outsideDhaka: shipping?.outsideDhaka ?? 0,
   };
- 
+
   const selectedShipping = watch("shipping", "dhakaCity");
   const subTotal = (displayPrice || 0) * quantity;
   const total = (displayPrice || 0) * quantity + shippingCost[selectedShipping];
- 
+
   // ── Submit ─────────────────────────────────────────────────────────────────
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
@@ -124,9 +124,9 @@ const ShopDetails = ({ slug }: { slug: string }) => {
         toast.error("Please select a variant");
         return;
       }
- 
+
       setPlaceOrderLoading(true);
- 
+
       const payload = {
         user: { name: data.name, phone: data.phone, address: data.address },
         products: [
@@ -150,37 +150,37 @@ const ShopDetails = ({ slug }: { slug: string }) => {
         },
         shippingArea: data.shipping,
       };
- 
+
       // Simulate order placement with static data
       await new Promise((res) => setTimeout(res, 800));
       localStorage.setItem(
-  "orderData",
-  JSON.stringify({
-    ...payload,
-    products: [
-      {
-        slug: _id,
-        name: selectedVariant ? selectedVariant.name : productName,
-        price: selectedVariant ? selectedVariant.price : displayPrice,
-        image: selectedVariant ? selectedVariant.image : displayImage,
-        unit: selectedVariant ? selectedVariant.name : "pcs",
-        quantity,
-      },
-    ],
-    trackingId: "ORD-" + Date.now(),
-    createdAt: new Date().toISOString(),
-    totalAmount: total,
-    shippingCost:
-      data.shipping === "dhakaCity"
-        ? shipping?.dhakaCity
-        : data.shipping === "dhakaCityOuter"
-        ? shipping?.dhakaCityOuter
-        : shipping?.outsideDhaka,
-  })
-);
+        "orderData",
+        JSON.stringify({
+          ...payload,
+          products: [
+            {
+              slug: _id,
+              name: selectedVariant ? selectedVariant.name : productName,
+              price: selectedVariant ? selectedVariant.price : displayPrice,
+              image: selectedVariant ? selectedVariant.image : displayImage,
+              unit: selectedVariant ? selectedVariant.name : "pcs",
+              quantity,
+            },
+          ],
+          trackingId: "ORD-" + Date.now(),
+          createdAt: new Date().toISOString(),
+          totalAmount: total,
+          shippingCost:
+            data.shipping === "dhakaCity"
+              ? shipping?.dhakaCity
+              : data.shipping === "dhakaCityOuter"
+                ? shipping?.dhakaCityOuter
+                : shipping?.outsideDhaka,
+        })
+      );
       router.push(`/success`);
       toast.success("Order Placed Successfully!");
- 
+
       reset({
         name: "",
         phone: "",
@@ -194,7 +194,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
       setPlaceOrderLoading(false);
     }
   };
- 
+
   return (
     <>
       <Navbar />
@@ -204,7 +204,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
       >
         <div className="px-[5%]">
           <div className="max-w-screen-xl mx-auto font-anek_bangla md:pt-10 pt-0">
- 
+
             {/* ── Tagline ── */}
             <div className="bg-white rounded-lg">
               <h1
@@ -212,14 +212,14 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                 dangerouslySetInnerHTML={{ __html: tagline }}
               />
             </div>
- 
+
             <Link
               href="#orderSection"
               className="relative flex items-center justify-center gap-2 mx-auto my-3 bg-[#FFa800] text-[#0E243A] text-2xl font-bold py-2 px-4 cursor-pointer text-center w-fit mb-5 overflow-hidden"
             >
               অর্ডার করতে চাই
             </Link>
- 
+
             {/* ── Product Header Banner ── */}
             <div className="bg-deepGreen py-10 text-center space-y-3 rounded-lg">
               <p
@@ -243,29 +243,29 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                   <span className="line-through">{prvPrice}</span>টাকা
                 </h1>
               ) : null}
-             <div className="flex flex-col justify-center items-center sm:flex-row sm:items-center gap-5 mt-5">
-  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">
-    বর্তমান মূল্য :{" "}
-    <span className="bg-[#FFA800] text-black px-4">
-      ৳ {displayPrice} টাকা
-    </span>
-  </h1>
+              <div className="flex flex-col justify-center items-center sm:flex-row sm:items-center gap-5 mt-5">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">
+                  বর্তমান মূল্য :{" "}
+                  <span className="bg-[#FFA800] text-black px-4">
+                    ৳ {displayPrice} টাকা
+                  </span>
+                </h1>
 
-  {(productType === "variant"
-    ? (selectedVariant?.prvPrice ?? 0) > displayPrice
-    : prvPrice > displayPrice) && (
-    <span className="bg-green-500 text-white text-sm sm:text-base px-3 py-1 rounded-full w-fit">
-      Save ৳
-      {(
-        (productType === "variant"
-          ? selectedVariant?.prvPrice ?? 0
-          : prvPrice ?? 0) - displayPrice
-      ).toLocaleString()}
-    </span>
-  )}
-</div>
+                {(productType === "variant"
+                  ? (selectedVariant?.prvPrice ?? 0) > displayPrice
+                  : prvPrice > displayPrice) && (
+                    <span className="bg-green-500 text-white text-sm sm:text-base px-3 py-1 rounded-full w-fit">
+                      Save ৳
+                      {(
+                        (productType === "variant"
+                          ? selectedVariant?.prvPrice ?? 0
+                          : prvPrice ?? 0) - displayPrice
+                      ).toLocaleString()}
+                    </span>
+                  )}
+              </div>
             </div>
- 
+
             {/* ── Order Form ── */}
             <div className="relative">
               <div className="absolute w-full flex flex-col items-center pt-10 h-[350px] bg-[#E4E9E6] rounded-lg">
@@ -282,7 +282,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                   <p> নিতে নিচের ফর্মটি পূরণ করুন এবং অর্ডার নিশ্চিত করুন</p>
                 </div>
               </div>
- 
+
               <form
                 id="orderSection"
                 onSubmit={handleSubmit(onSubmit)}
@@ -331,7 +331,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                     </div>
                   </div>
                 </div>
- 
+
                 {/* ── Your Order ── */}
                 <div className="bg-white md:p-5 flex-1 rounded-lg">
                   <h2 className="text-xl font-bold text-[#FFA800] mb-5 p-5 md:p-0">Your Order</h2>
@@ -366,7 +366,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                           </div>
                         </div>
                       )}
- 
+
                       {/* Variant selector */}
                       {productType === "variant" && variants && variants.length > 0 && (
                         <div className="pt-4 border-gray-200">
@@ -379,11 +379,10 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                               return (
                                 <label
                                   key={index}
-                                  className={`flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer p-3 sm:p-4 border-2 rounded-xl transition-all duration-200 ${
-                                    isSelected
-                                      ? "border-forest-green bg-forest-green/5 shadow-sm"
-                                      : "border-gray-200 hover:border-forest-green/40 bg-white"
-                                  }`}
+                                  className={`flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer p-3 sm:p-4 border-2 rounded-xl transition-all duration-200 ${isSelected
+                                    ? "border-forest-green bg-forest-green/5 shadow-sm"
+                                    : "border-gray-200 hover:border-forest-green/40 bg-white"
+                                    }`}
                                 >
                                   <div className="flex items-center gap-3 flex-1">
                                     <input
@@ -423,7 +422,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                                       </div>
                                     </div>
                                   </div>
- 
+
                                   {isSelected && (
                                     <div className="flex items-center justify-between sm:justify-end gap-5 w-full sm:w-auto mt-2 sm:mt-0 pt-3 sm:pt-0 border-t sm:border-none border-gray-200/60">
                                       <span className="sm:hidden text-sm font-medium text-gray-600">
@@ -467,7 +466,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                           </div>
                         </div>
                       )}
- 
+
                       {/* Regular quantity control */}
                       {productType !== "variant" && (
                         <div className="flex items-center justify-between mt-5 pt-4 border-t border-gray-200">
@@ -494,7 +493,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                         </div>
                       )}
                     </div>
- 
+
                     {/* Subtotal & Shipping */}
                     <div className="bg-gray-50/50 rounded-xl p-4 sm:p-5 border border-gray-100">
                       <div className="flex justify-between items-center mb-4">
@@ -551,7 +550,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                         <span className="font-extrabold text-forest-green text-xl">৳ {total}</span>
                       </div>
                     </div>
- 
+
                     {/* Payment Options */}
                     <div className="my-6">
                       <p className="font-bold text-gray-800 mb-3">Payment Option</p>
@@ -576,7 +575,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                           <span className="font-medium text-gray-700">Bkash</span>
                         </label>
                       </div>
- 
+
                       {paymentMethod === "cash" && (
                         <div className="mt-3 animate-in fade-in duration-300">
                           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -599,7 +598,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                           </div>
                         </div>
                       )}
- 
+
                       {paymentMethod === "bkash" && (
                         <div className="mt-4 space-y-4 bg-gray-50 p-4 rounded-lg border border-gray-100 animate-in fade-in duration-300">
                           <div>
@@ -608,11 +607,10 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                             </label>
                             <input
                               type="tel"
-                              className={`w-full p-3 border rounded-lg outline-none focus:ring-1 ${
-                                errors.bkashPhone
-                                  ? "border-red-500 focus:ring-red-500"
-                                  : "border-gray-300 focus:ring-forest-green focus:border-forest-green"
-                              }`}
+                              className={`w-full p-3 border rounded-lg outline-none focus:ring-1 ${errors.bkashPhone
+                                ? "border-red-500 focus:ring-red-500"
+                                : "border-gray-300 focus:ring-forest-green focus:border-forest-green"
+                                }`}
                               placeholder="01XXXXXXXXX"
                               {...register("bkashPhone", {
                                 required: "Bkash number is required",
@@ -634,11 +632,10 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                             </label>
                             <input
                               type="text"
-                              className={`w-full p-3 border rounded-lg outline-none focus:ring-1 ${
-                                errors.bkashTransactionId
-                                  ? "border-red-500 focus:ring-red-500"
-                                  : "border-gray-300 focus:ring-forest-green focus:border-forest-green"
-                              }`}
+                              className={`w-full p-3 border rounded-lg outline-none focus:ring-1 ${errors.bkashTransactionId
+                                ? "border-red-500 focus:ring-red-500"
+                                : "border-gray-300 focus:ring-forest-green focus:border-forest-green"
+                                }`}
                               placeholder="Enter transaction ID"
                               {...register("bkashTransactionId", {
                                 required: "Transaction ID is required",
@@ -653,7 +650,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                         </div>
                       )}
                     </div>
- 
+
                     {/* Submit Button */}
                     <motion.div
                       animate={
@@ -672,11 +669,10 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                       <button
                         type="submit"
                         disabled={placeOrderLoading}
-                        className={`w-full py-4 border border-4 border-[#FFa800] rounded-lg flex items-center justify-center gap-3 text-lg sm:text-xl font-bold transition-all shadow-md ${
-                          placeOrderLoading
-                            ? "bg-gray-400 cursor-not-allowed text-white"
-                            : "bg-[#1a6630] hover:bg-[#152a1f] text-white cursor-pointer hover:shadow-lg"
-                        }`}
+                        className={`w-full py-4 border border-4 border-[#FFa800] rounded-lg flex items-center justify-center gap-3 text-lg sm:text-xl font-bold transition-all shadow-md ${placeOrderLoading
+                          ? "bg-gray-400 cursor-not-allowed text-white"
+                          : "bg-[#1a6630] hover:bg-[#152a1f] text-white cursor-pointer hover:shadow-lg"
+                          }`}
                       >
                         <LockKeyhole className="mb-0.5" size={22} />
                         {placeOrderLoading ? "অর্ডার প্রসেস হচ্ছে..." : "অর্ডার কনফার্ম করুন"}
@@ -689,7 +685,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                 </div>
               </form>
             </div>
- 
+
             {/* ── Benefits Section ── */}
             <div className="mt-24 my-10 bg-white">
               <h1
@@ -709,7 +705,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                       </p>
                     ))}
                   </div>
- 
+
                   {/* Mobile CTA */}
                   <div className="flex sm:hidden text-center py-7 flex-col items-center gap-4">
                     <Link
@@ -719,15 +715,15 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                       অর্ডার করতে চাই
                     </Link>
                     <p className="text-base sm:text-2xl font-bold text-center leading-snug">
-                      তাই আর দেরি না করে আজই অর্ডার করুন <br /> প্রয়োজনে হোয়াটআপ করুন - +8801342106348
+                      তাই আর দেরি না করে আজই অর্ডার করুন <br /> প্রয়োজনে হোয়াটআপ করুন - +8801787878743
                     </p>
-                    <a href="https://wa.me/+8801342106348" target="_blank" rel="noopener noreferrer">
+                    <a href="https://wa.me/+8801787878743" target="_blank" rel="noopener noreferrer">
                       <button className="rounded-none bg-[#67D449] text-white text-lg font-bold py-2 px-4 cursor-pointer flex items-center justify-center gap-3">
                         <FaWhatsapp /> WhatsApp
                       </button>
                     </a>
                   </div>
- 
+
                   <Image
                     height={1000}
                     width={1000}
@@ -736,7 +732,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                     className="sm:my-10 w-full max-w-[500px] h-auto object-contain mx-auto"
                   />
                 </div>
- 
+
                 {/* Desktop CTA */}
                 <div className="hidden sm:flex text-center pt-10 sm:py-7 flex-col items-center gap-4">
                   <Link
@@ -746,9 +742,9 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                     অর্ডার করতে চাই
                   </Link>
                   <p className="text-base sm:text-2xl font-bold text-center leading-snug">
-                    তাই আর দেরি না করে আজই অর্ডার করুন <br /> প্রয়োজনে হোয়াটআপ করুন - +8801342106348
+                    তাই আর দেরি না করে আজই অর্ডার করুন <br /> প্রয়োজনে হোয়াটআপ করুন - +8801787878743
                   </p>
-                  <a href="https://wa.me/+8801342106348" target="_blank" rel="noopener noreferrer">
+                  <a href="https://wa.me/+8801787878743" target="_blank" rel="noopener noreferrer">
                     <button className="rounded-none bg-[#67D449] text-white text-lg font-bold py-2 px-4 cursor-pointer flex items-center justify-center gap-3">
                       <FaWhatsapp /> WhatsApp
                     </button>
@@ -756,13 +752,13 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                 </div>
               </div>
             </div>
- 
+
             {/* ── Hadith ── */}
             <p
               className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center leading-relaxed"
               dangerouslySetInnerHTML={{ __html: hadith }}
             />
- 
+
             {/* ── Buying Reason Section ── */}
             <div className="bg-white my-10">
               <h1
@@ -798,9 +794,9 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                     অর্ডার করতে চাই
                   </Link>
                   <p className="text-base sm:text-2xl font-bold text-center leading-snug">
-                    তাই আর দেরি না করে আজই অর্ডার করুন <br /> প্রয়োজনে হোয়াটআপ করুন - +8801342106348
+                    তাই আর দেরি না করে আজই অর্ডার করুন <br /> প্রয়োজনে হোয়াটআপ করুন - +8801787878743
                   </p>
-                  <a href="https://wa.me/+8801342106348" target="_blank" rel="noopener noreferrer">
+                  <a href="https://wa.me/+8801787878743" target="_blank" rel="noopener noreferrer">
                     <button className="rounded-none bg-[#67D449] text-white text-lg font-bold py-2 px-4 cursor-pointer flex items-center justify-center gap-3">
                       <FaWhatsapp /> WhatsApp
                     </button>
@@ -808,7 +804,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                 </div>
               </div>
             </div>
- 
+
             {/* ── Reviews Section ── */}
             <div className="pt-5 pb-24 px-[5%] bg-[#E4E9E6] flex flex-col-reverse lg:flex-row justify-between items-center gap-5">
               <div className="w-full">
@@ -821,33 +817,33 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                   আপনার প্রত্যাশিত ফলাফল পেতে সঠিক নিয়মে নিয়মিত ব্যবহার অপরিহার্য।
                 </p>
                 <div className="hidden sm:block sm:text-start py-7">
-                  <a href="https://wa.me/+8801342106348" target="_blank" rel="noopener noreferrer">
+                  <a href="https://wa.me/+8801787878743" target="_blank" rel="noopener noreferrer">
                     <button className="rounded-none bg-[#67D449] text-white text-lg font-bold py-2 px-4 cursor-pointer flex items-center justify-center gap-3">
                       <FaWhatsapp /> WhatsApp
                     </button>
                   </a>
                 </div>
               </div>
- 
+
               <div className="py-12 px-[5%] bg-[#1F6E43] text-center text-white space-y-5">
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
                   নানান রকম অফার আপডেট পেতে <br /> আমাদের পেইজে লাইক দিন
                 </h1>
-                <Link target="_blank" href={"https://www.facebook.com/borkotmoyponno"}>
+                <Link target="_blank" href="#">
                   <button className="mx-auto text-center bg-bright-orange px-3 py-2 text-lg text-midnight-navy cursor-pointer flex items-center">
-                    <FaFacebookF className="text-blue-500 mr-2 text-xl" /> Borkotmoy Ponno
+                    <FaFacebookF className="text-blue-500 mr-2 text-xl" /> Khidma Organic
                   </button>
                 </Link>
                 <Link
-                  href="https://www.facebook.com/borkotmoyponno"
+                  href="#"
                   target="_blank"
                   className="text-base w-fit px-4 py-2 mx-auto mt-3 block text-white rounded"
                 >
-                  Borkotmoy Ponno— যেখানে প্রতিটি পণ্যের মাঝে থাকে সততা, বিশ্বাস ও খোদাভীতির ছোঁয়া।
+                  Khidma Organic— যেখানে প্রতিটি পণ্যের মাঝে থাকে সততা, বিশ্বাস ও খোদাভীতির ছোঁয়া।
                 </Link>
               </div>
             </div>
- 
+
             {/* ── Review Carousel (Static) ── */}
             <div className="-mt-32 px-[10%]">
               <Carousel>
@@ -877,7 +873,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                 </CarouselContent>
               </Carousel>
             </div>
- 
+
             {/* ── Order CTA ── */}
             <div className="flex justify-center items-center my-10 -mt-2">
               <Link
@@ -887,7 +883,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                 অর্ডার করতে চাই
               </Link>
             </div>
- 
+
             {/* ── Related Products ── */}
             <div className="my-10 font-caladea">
               <p className="text-2xl sm:text-3xl lg:text-4xl font-medium text-[#1F6E43] mb-5">
@@ -895,12 +891,12 @@ const ShopDetails = ({ slug }: { slug: string }) => {
               </p>
               {allData.length > 0 ? (
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {allData.slice(0,4).map((product) => (
-                      <ProductCard
-                        key={product._id}  
-                        product={product}
-                      />
-                    ))}
+                  {allData.slice(0, 4).map((product) => (
+                    <ProductCard
+                      key={product._id}
+                      product={product}
+                    />
+                  ))}
                 </div>
               ) : (
                 <div className="col-span-full flex flex-col items-center justify-center text-center p-10 bg-white rounded-lg shadow-md border border-gray-200">
@@ -909,7 +905,7 @@ const ShopDetails = ({ slug }: { slug: string }) => {
                 </div>
               )}
             </div>
- 
+
           </div>
         </div>
       </div>
@@ -917,5 +913,5 @@ const ShopDetails = ({ slug }: { slug: string }) => {
     </>
   );
 };
- 
+
 export default ShopDetails;
