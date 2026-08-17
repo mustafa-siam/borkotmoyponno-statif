@@ -15,12 +15,12 @@ export default function Page() {
       <div className="bg-pageColor">
         <FeaturedProduct />
       </div>
-      <div className="bg-mint-background">
+      <div className="bg-[#E4E9E6]">
         <Reliable />
       </div>
-      <div className="bg-white">
+      {/* <div className="bg-white">
         <Stats />
-      </div>
+      </div> */}
       <div className="bg-gray-50">
         <Review />
       </div>

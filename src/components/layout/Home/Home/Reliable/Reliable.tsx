@@ -1,5 +1,5 @@
 ﻿import React from "react";
-import { CheckCircle, Phone, Leaf, Shield, Heart, Award } from "lucide-react";
+import { CheckCircle, Phone, Leaf, Shield, Heart, Award, Truck, DollarSign } from "lucide-react";
 
 export default function ReliableOrganicStore() {
   const features = [
@@ -26,13 +26,45 @@ export default function ReliableOrganicStore() {
     },
   ];
 
-
   const stats = [
-    { icon: Shield, label: "১০০% নিরাপদ", value: "Certified" },
-    { icon: Leaf, label: "অর্গানিক", value: "Pure" },
-    { icon: Heart, label: "স্বাস্থ্যকর", value: "Natural" },
-    { icon: Award, label: "গুণগত মান", value: "Premium" },
+    {
+      icon: Shield,
+      title: "১০০% খাঁটি ও অর্গানিক",
+      subtitle: "সম্পূর্ণ প্রাকৃতিক",
+      description: "রাসায়নিক মুক্ত খাদ্য",
+      imageSrc: "/2.svg",
+      color: "text-emerald-600",
+      bgColor: "bg-emerald-50",
+    },
+    {
+      icon: Truck,
+      title: "দ্রুত ডেলিভারি",
+      subtitle: "দ্রুততম সেবা",
+      description: "সময়মতো পৌঁছে দেওয়া",
+      imageSrc: "/3.svg",
+      color: "text-blue-600",
+      bgColor: "bg-blue-50",
+    },
+    {
+      icon: DollarSign,
+      title: "সাশ্রয়ী মূল্য",
+      subtitle: "সাধ্যের মধ্যে",
+      description: "সেরা দামে সেরা পণ্য",
+      imageSrc: "/4.svg",
+      color: "text-amber-600",
+      bgColor: "bg-amber-50",
+    },
+    {
+      icon: Award,
+      title: "নিশ্চিত কোয়ালিটি",
+      subtitle: "গুণগত মান",
+      description: "প্রিমিয়াম গুণমান নিশ্চয়তা",
+      imageSrc: "/1.svg",
+      color: "text-violet-600",
+      bgColor: "bg-violet-50",
+    },
   ];
+
 
   return (
     <section className="relative px-4 sm:px-[5%] py-16 lg:py-24">
@@ -42,20 +74,30 @@ export default function ReliableOrganicStore() {
           <div className="flex-1">
             <div className="grid grid-cols-2 gap-4">
               {stats.map((stat, index) => {
-                const IconComponent = stat.icon;
                 return (
                   <div
                     key={index}
-                    className="text-center p-5 py-10 sm:py-14 bg-white border border-gray-100 hover:border-forest-green/10 hover:shadow-lg hover:shadow-forest-green/5 transition-all duration-300"
+                    className="group bg-white border border-gray-100 p-5 lg:p-8 hover:border-gray-200 hover:shadow-lg hover:shadow-gray-100/80 transition-all duration-300 cursor-pointer"
                   >
-                    <div className="w-11 h-11 bg-forest-green/10 flex items-center justify-center mx-auto mb-3">
-                      <IconComponent className="w-5 h-5 text-forest-green" />
-                    </div>
-                    <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">
-                      {stat.value}
-                    </div>
-                    <div className="text-base font-medium text-midnight-navy">
-                      {stat.label}
+                    <div className="text-center space-y-4">
+                      {/* Icon */}
+                      <div className={`w-14 h-14 lg:w-16 lg:h-16 ${stat.bgColor} flex items-center justify-center mx-auto transition-transform duration-300 group-hover:scale-105`}>
+                        <img
+                          src={stat.imageSrc}
+                          alt={stat.title}
+                          className="w-7 h-7 lg:w-8 lg:h-8 opacity-70"
+                        />
+                      </div>
+
+                      {/* Text */}
+                      <div className="space-y-1.5">
+                        <h3 className="text-sm lg:text-base font-semibold text-midnight-navy">
+                          {stat.title}
+                        </h3>
+                        <p className="text-xs text-gray-400">
+                          {stat.description}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 );

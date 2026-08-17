@@ -21,7 +21,7 @@ const [current, setCurrent] = useState(0);
   const total = Math.ceil(reviews.length / perPage);
   const visible = reviews.slice(current * perPage, current * perPage + perPage);
   return (
-    <section className="bg-white pb-12">
+    <section className="bg-white px-4 sm:px-[5%] py-16 lg:py-24">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-12">
           <p className="text-deepGreen text-sm font-medium mb-1">গ্রাহকরা কী বলেন</p>
